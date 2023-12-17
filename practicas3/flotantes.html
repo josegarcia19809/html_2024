@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <title>Texto que fluye alrededor de elementos flotantes</title>
+    <meta charset="UTF-8">
+    <style>
+        header {
+            background-color: steelblue;
+            text-align: center;
+            font-family: arial, helvetica, sans-serif;
+            padding: .2em;
+        }
+
+        p {
+            text-align: justify;
+            font-family: verdana, geneva, sans-serif;
+            margin: .5em;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .flotante {
+            background-color: lightgrey;
+            font-size: 1.5em;
+            font-family: arial, helvetica, sans-serif;
+            padding: .2em;
+            margin-left: .5em;
+            margin-bottom: .5em;
+            float: right;
+            text-align: right;
+            width: 50%;
+        }
+
+        section {
+            border: 1px solid steelblue;
+        }
+
+        #imagen-size {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<header><img id="imagen-size" src="img/tomorrow.jpg" alt="Deitel"/></header>
+<section>
+    <h1 class="flotante">Al filo del mañana</h1>
+    <p>En el futuro una invasión extraterrestre a la Tierra tendrá
+        como objetivo la destrucción de la especie humana. La historia
+        de <em>All You Need Is Kill </em>se desarrolla justo en este
+        momento, donde los hombres hacen todo lo posible por resistir
+        al ataque y evitar así su extinción. </p>
+</section>
+<section>
+    <h1 class="flotante">Argumento</h1>
+    <p>El protagonista es un oficial sin experiencia en combate, que
+        ve lo que puede pasar con su vida convocado para la guerra
+        contra los invasores que ya lleva largo tiempo.
+        El día que muere durante el combate se queda atrapado en un
+        bucle temporal, que lo hará resucitar constante e
+        inevitablemente, reapareciendo una y otra vez en el mismo día
+        de su muerte para luchar y volver a morir en
+        la misma guerra.</p>
+</section>
+</body>
+</html>
