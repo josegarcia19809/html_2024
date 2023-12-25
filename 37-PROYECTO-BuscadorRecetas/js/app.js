@@ -34,6 +34,13 @@ function seleccionarCategoria(e) {
 }
 
 function mostrarRecetas(recetas = []) {
+    limpiarResultados();
+
+    const heading = document.createElement("H2");
+    heading.classList.add("text-center", "text-black", "my-5");
+    heading.textContent = recetas.length ? "Resultados" : "Ho hay resultados";
+    resultado.appendChild(heading);
+
     recetas.forEach(receta => {
         const {idMeal, strMeal, strMealThumb} = receta;
         const recetaContenedor = document.createElement("DIV");
@@ -68,6 +75,12 @@ function mostrarRecetas(recetas = []) {
 
         resultado.appendChild(recetaContenedor);
     })
+}
+
+function limpiarResultados() {
+    while (resultado.firstChild) {
+        resultado.removeChild(resultado.firstChild);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", iniciarApp);
