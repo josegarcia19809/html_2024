@@ -10,7 +10,36 @@ function buscarClima(e) {
     e.preventDefault();
     console.log("Buscando clima...");
     // Validar los datos
+    const ciudad = document.querySelector('#ciudad').value;
+    const pais = document.querySelector('#pais').value;
+
+    if (ciudad === "" || pais === "") {
+        mostrarError("Ambos campos son obligatorios");
+        return;
+    }
 
     // Consultar la API
-    
+
+}
+
+function mostrarError(mensaje) {
+    console.log(mensaje);
+    // Crear una alerta
+    // Primero buscar la alerta
+    const existeAlerta = document.querySelector(".alerta");
+    if (!existeAlerta) {
+        const alerta = document.createElement("div");
+        alerta.classList.add("alerta", "bg-red-100", "border-red-400", "text-red-700",
+            "px-4", "py-3", "rounded", "max-w-md", "mx-auto", "mt-6", "text-center");
+
+        alerta.innerHTML = `
+        <strong class="font-bold">Error!</strong>
+        <span class="block">${mensaje}</span>
+        `;
+        container.appendChild(alerta);
+        // Se elimina la alerta después de 5 segundos
+        setTimeout(()=>{
+            alerta.remove();
+        }, 3000);
+    }
 }
