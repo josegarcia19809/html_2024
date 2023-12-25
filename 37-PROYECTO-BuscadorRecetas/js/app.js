@@ -1,4 +1,5 @@
 const selectCategorias = document.querySelector("#categorias");
+selectCategorias.addEventListener('change', seleccionarCategoria);
 
 function iniciarApp() {
     obtenerCategorias();
@@ -20,6 +21,12 @@ function mostrarCategorias(categorias = []) {
         option.textContent = categoria.strCategory;
         selectCategorias.appendChild(option);
     });
+}
+
+function seleccionarCategoria(e) {
+    const categoria=e.target.value;
+    const url=`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoria}`
+    console.log(url);
 }
 
 document.addEventListener("DOMContentLoaded", iniciarApp);
