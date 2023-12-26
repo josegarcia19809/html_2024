@@ -140,10 +140,12 @@ function mostrarRecetaModal(receta) {
 
     const btnFavorito = document.createElement("BUTTON");
     btnFavorito.classList.add("btn", "btn-danger", "col");
-    btnFavorito.textContent = "Guardar favorito";
+    btnFavorito.textContent = existeStorage(idMeal) ? "Eliminar Favorito" : "Guardar favorito";
     btnFavorito.onclick = function () {
         // Primero comprobamos que no exista en el localstorage
         if (existeStorage(idMeal)) {
+            eliminarFavorito(idMeal);
+            btnFavorito.textContent = "Guardar favorito";
             return;
         }
         // Si no existe lo agrega
@@ -152,6 +154,7 @@ function mostrarRecetaModal(receta) {
             titulo: strMeal,
             img: strMealThumb
         });
+        btnFavorito.textContent = "Eliminar Favorito";
     }
 
     const btnCerrarModal = document.createElement("BUTTON");
@@ -176,6 +179,12 @@ function agregarFavorito(receta) {
 function existeStorage(id) {
     const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
     return favoritos.some(favorito => favorito.id === id);
+}
+
+function eliminarFavorito(id) {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
+    const nuevosFavoritos = favoritos.filter(favorito => favorito.id !== id);
+    localStorage.setItem("favoritos", JSON.stringify(nuevosFavoritos));
 }
 
 document.addEventListener("DOMContentLoaded", iniciarApp);
