@@ -1,5 +1,6 @@
 const resultado = document.querySelector("#resultado");
 const formulario = document.querySelector("#formulario");
+const llave = document.querySelector("#key");
 
 
 window.onload = () => {
@@ -37,7 +38,7 @@ function mostrarAlerta(mensaje) {
 }
 
 function buscarImagenes(termino) {
-    const key = "24981196-c53eacfd1b6609fc75811c6f5";
+    const key = llave.value;
     const url = `https://pixabay.com/api/?key=${key}&q=${termino}`;
     fetch(url)
         .then(respuesta => respuesta.json())
@@ -47,5 +48,15 @@ function buscarImagenes(termino) {
 }
 
 function mostrarImagenes(imagenes) {
-    console.log(imagenes)
+    // Limpiar el contenedor de las imágenes
+    while (resultado.firstChild) {
+        resultado.removeChild(resultado.firstChild);
+    }
+
+    imagenes.forEach(imagen=>{
+        const {previewURL, likes, views, largeImageURL}= imagen;
+        resultado.innerHTML+=`
+        <a href="${largeImageURL}">Ver imagen</a>
+        `;
+    })
 }
