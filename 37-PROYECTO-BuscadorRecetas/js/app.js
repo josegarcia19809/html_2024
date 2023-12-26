@@ -142,6 +142,11 @@ function mostrarRecetaModal(receta) {
     btnFavorito.classList.add("btn", "btn-danger", "col");
     btnFavorito.textContent = "Guardar favorito";
     btnFavorito.onclick = function () {
+        // Primero comprobamos que no exista en el localstorage
+        if (existeStorage(idMeal)) {
+            return;
+        }
+        // Si no existe lo agrega
         agregarFavorito({
             id: idMeal,
             titulo: strMeal,
@@ -166,6 +171,11 @@ function mostrarRecetaModal(receta) {
 function agregarFavorito(receta) {
     const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
     localStorage.setItem("favoritos", JSON.stringify([...favoritos, receta]));
+}
+
+function existeStorage(id) {
+    const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
+    return favoritos.some(favorito => favorito.id === id);
 }
 
 document.addEventListener("DOMContentLoaded", iniciarApp);
