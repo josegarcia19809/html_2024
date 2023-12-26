@@ -64,6 +64,11 @@ function mostrarRecetas(recetas = []) {
         const recetaCardButton = document.createElement("BUTTON");
         recetaCardButton.classList.add("btn", "btn-danger", "w-100");
         recetaCardButton.textContent = "Ver Receta";
+        // recetaCardButton.dataset.bsTarget = "#modal";
+        // recetaCardButton.dataset.bsToggle = "modal";
+        recetaCardButton.onclick = function () {
+            seleccionarReceta(idMeal);
+        }
 
         recetaCardBody.appendChild(recetaCardHeading);
         recetaCardBody.appendChild(recetaCardButton);
@@ -81,6 +86,17 @@ function limpiarResultados() {
     while (resultado.firstChild) {
         resultado.removeChild(resultado.firstChild);
     }
+}
+
+function seleccionarReceta(id) {
+    const url = `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+    fetch(url)
+        .then(respuesta => respuesta.json())
+        .then(resultado => mostrarRecetaModal(resultado.meals[0]));
+}
+
+function mostrarRecetaModal(receta) {
+    console.log(receta)
 }
 
 document.addEventListener("DOMContentLoaded", iniciarApp);
