@@ -89,6 +89,12 @@ function limpiarResultados() {
     }
 }
 
+function limpiarHTML(selector) {
+    while (selector.firstChild) {
+        selector.removeChild(selector.firstChild);
+    }
+}
+
 function seleccionarReceta(id) {
     const url = `https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`
     fetch(url)
@@ -127,6 +133,26 @@ function mostrarRecetaModal(receta) {
         }
     }
     modalBody.appendChild(listGroup);
+
+    // Para agregar los botones de Favorito y Cerrar
+    const modalFooter = document.querySelector(".modal-footer");
+    limpiarHTML(modalFooter);
+
+    const btnFavorito = document.createElement("BUTTON");
+    btnFavorito.classList.add("btn", "btn-danger", "col");
+    btnFavorito.textContent = "Guardar favorito";
+
+    const btnCerrarModal = document.createElement("BUTTON");
+    btnCerrarModal.classList.add("btn", "btn-secondary", "col");
+    btnCerrarModal.textContent = "Cerrar";
+    btnCerrarModal.onclick = function () {
+        modal.hide();
+    }
+
+    modalFooter.appendChild(btnFavorito);
+    modalFooter.appendChild(btnCerrarModal);
+
+
     modal.show();
 }
 
