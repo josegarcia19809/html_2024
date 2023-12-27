@@ -26,6 +26,25 @@ function submitFormulario(e) {
         mostrarAlerta("Ambos campos son obligatorios");
         return;
     }
+
+    // Consultar la API con los resultados
+    consultarAPI();
+}
+
+function consultarAPI() {
+    const {moneda, criptomoneda} = objBusqueda;
+    const parametros=`pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+    const url = `https://min-api.cryptocompare.com/data/${parametros}`;
+    fetch(url)
+        .then(respuesta => respuesta.json())
+        .then(cotizacion => {
+            mostrarCotizacionHTML(cotizacion.DISPLAY[criptomoneda][moneda]);
+        });
+
+}
+
+function mostrarCotizacionHTML(cotizacion) {
+    console.log(cotizacion)
 }
 
 function mostrarAlerta(mensaje) {
