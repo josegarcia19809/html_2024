@@ -3,6 +3,7 @@ const criptomonedaSelect = document.querySelector("#criptomonedas");
 const monedaSelect = document.querySelector("#moneda");
 
 const formulario = document.querySelector("#formulario");
+const resultado = document.querySelector("#resultado");
 
 
 const objBusqueda = {
@@ -33,7 +34,10 @@ function submitFormulario(e) {
 
 function consultarAPI() {
     const {moneda, criptomoneda} = objBusqueda;
-    const parametros=`pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+    const parametros = `pricemultifull?fsyms=${criptomoneda}&tsyms=${moneda}`;
+
+    mostrarSpinner();
+    
     const url = `https://min-api.cryptocompare.com/data/${parametros}`;
     fetch(url)
         .then(respuesta => respuesta.json())
@@ -44,7 +48,41 @@ function consultarAPI() {
 }
 
 function mostrarCotizacionHTML(cotizacion) {
-    console.log(cotizacion)
+    limpiarHTML();
+
+    const {PRICE, HIGHDAY, LOWDAY, CHANGEPCT24HOUR, LASTUPDATE} = cotizacion;
+
+    const precio = document.createElement("P");
+    precio.classList.add("precio");
+    precio.innerHTML = `El precio es <span>${PRICE}</span>`;
+
+    const precioAlto = document.createElement("P");
+    precioAlto.innerHTML = `El precio más alto del día es <span>${HIGHDAY}</span>`;
+
+    const precioBajo = document.createElement("P");
+    precioBajo.innerHTML = `El precio más bajo del día es <span>${LOWDAY}</span>`;
+
+    const ultimasHoras = document.createElement("P");
+    ultimasHoras.innerHTML = `Variación últimas 24 horas <span>${CHANGEPCT24HOUR}%</span>`;
+
+    const ultimaActualizacion = document.createElement("P");
+    ultimaActualizacion.innerHTML = `Última actualización <span>${LASTUPDATE}</span>`;
+
+    resultado.appendChild(precio);
+    resultado.appendChild(precioAlto);
+    resultado.appendChild(precioBajo);
+    resultado.appendChild(ultimasHoras);
+    resultado.appendChild(ultimaActualizacion);
+}
+
+function mostrarSpinner() {
+
+}
+
+function limpiarHTML() {
+    while (resultado.firstChild) {
+        resultado.removeChild(resultado.firstChild);
+    }
 }
 
 function mostrarAlerta(mensaje) {
