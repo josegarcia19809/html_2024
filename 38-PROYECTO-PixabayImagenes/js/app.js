@@ -3,6 +3,7 @@ const formulario = document.querySelector("#formulario");
 const llave = document.querySelector("#key");
 const registrosPorPagina = 40;
 let totalPaginas;
+let iterador;
 
 
 window.onload = () => {
@@ -46,6 +47,7 @@ function buscarImagenes(termino) {
         .then(respuesta => respuesta.json())
         .then(resultado => {
             totalPaginas = calcularPaginas(resultado.totalHits);
+            console.log(resultado)
             mostrarImagenes(resultado.hits);
         });
 }
@@ -74,7 +76,20 @@ function mostrarImagenes(imagenes) {
             </div>
         </div>
         `;
-    })
+    });
+
+    imprimirIterador();
+}
+
+function imprimirIterador() {
+    iterador = crearPaginador(totalPaginas);
+}
+
+// Generador que va a registrar la cantidad de elementos de acuerdo a las páginas
+function* crearPaginador(total) {
+    for (let i = 1; i <= total; i++) {
+        yield i;
+    }
 }
 
 function calcularPaginas(total) {
