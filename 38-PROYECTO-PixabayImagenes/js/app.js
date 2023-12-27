@@ -1,6 +1,8 @@
 const resultado = document.querySelector("#resultado");
 const formulario = document.querySelector("#formulario");
 const llave = document.querySelector("#key");
+const paginacionDiv = document.querySelector("#paginacion");
+
 const registrosPorPagina = 40;
 let totalPaginas;
 let iterador;
@@ -78,11 +80,32 @@ function mostrarImagenes(imagenes) {
         `;
     });
 
-    imprimirIterador();
+    imprimirPaginador();
 }
 
-function imprimirIterador() {
+function imprimirPaginador() {
+    // Limpiar el paginador previo
+    while (paginacionDiv.firstChild) {
+        paginacionDiv.removeChild(paginacionDiv.firstChild);
+    }
+
+    // Generar el nuevo HTML
     iterador = crearPaginador(totalPaginas);
+
+    while (true) {
+        const {value, done} = iterador.next();
+        if (done) return;
+
+        // Generar un botón para cada elemento en el generador
+        const boton = document.createElement("A");
+        boton.href = "#";
+        boton.dataset.pagina = value;
+        boton.textContent = value;
+        boton.classList.add("siguiente", "bg-yellow-400", "px-4",
+            "py-1", "mr-2", "font-bold", "mb-4", "uppercase", "rounded")
+
+        paginacionDiv.appendChild(boton);
+    }
 }
 
 // Generador que va a registrar la cantidad de elementos de acuerdo a las páginas
