@@ -1,6 +1,8 @@
 const resultado = document.querySelector("#resultado");
 const formulario = document.querySelector("#formulario");
 const llave = document.querySelector("#key");
+const registrosPorPagina = 40;
+let totalPaginas;
 
 
 window.onload = () => {
@@ -43,6 +45,7 @@ function buscarImagenes(termino) {
     fetch(url)
         .then(respuesta => respuesta.json())
         .then(resultado => {
+            totalPaginas = calcularPaginas(resultado.totalHits);
             mostrarImagenes(resultado.hits);
         });
 }
@@ -53,12 +56,12 @@ function mostrarImagenes(imagenes) {
         resultado.removeChild(resultado.firstChild);
     }
 
-    imagenes.forEach(imagen=>{
-        const {previewURL, likes, views, largeImageURL}= imagen;
-        resultado.innerHTML+=`
+    imagenes.forEach(imagen => {
+        const {previewURL, likes, views, largeImageURL} = imagen;
+        resultado.innerHTML += `
         <div class="w-1/2 md: w-1/3 lg: w-1/4 p-3 mb-4">
             <div class="bg-white">
-                <img class="w-full" src="${previewURL}" />
+                <img class="w-full" src="${previewURL}" alt="" />
                 <div class="p-4">
                     <p class="font-bold">${likes}<span class="font-light"> Me gusta</span></p>
                     <p class="font-bold">${views}<span class="font-light"> veces vista</span></p>
@@ -72,4 +75,8 @@ function mostrarImagenes(imagenes) {
         </div>
         `;
     })
+}
+
+function calcularPaginas(total) {
+    return parseInt(Math.ceil(total / registrosPorPagina));
 }
